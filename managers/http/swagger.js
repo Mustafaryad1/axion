@@ -29,7 +29,11 @@ const swaggerDefinition = {
   servers: [
     {
       url: "http://localhost:5111",
-      description: "Development server",
+      description: "local server",
+    },
+    {
+      url: " http://142.93.47.38:5111",
+      description: "deployment server",
     },
   ],
   components: {

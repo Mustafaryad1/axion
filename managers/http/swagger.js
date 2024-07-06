@@ -76,6 +76,7 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
+  apis: ["./UserServer.manager.js"], // Path to the API routes in your Node.js application
 };
 
 const swaggerSpec = swaggerJSDoc(options);

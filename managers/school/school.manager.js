@@ -38,8 +38,10 @@ module.exports = class SchoolManager {
     return school;
   }
 
-  async v1_updateSchool({ __body, __query }) {
-    const { name } = __body;
+  async v1_updateSchool({ name, __query }) {
+    const result = await this.validators.school.updateSchool({ name });
+    if (result) return result;
+    
     const { id } = __query;
     const School = this.mongomodels[this.usersCollection];
     const school = await School.findByIdAndUpdate(id, { name }, { new: true });

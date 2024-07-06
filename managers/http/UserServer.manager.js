@@ -2,6 +2,8 @@ const http = require("http");
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const swaggerUI = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
 
 module.exports = class UserServer {
   constructor({ config, managers }) {
@@ -31,6 +33,9 @@ module.exports = class UserServer {
       console.error(err.stack);
       res.status(500).send("Something broke!");
     });
+
+    /** swagger */
+    app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
     /** load routes */
     app.use("/api/schools", schoolRoutes);

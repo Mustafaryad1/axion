@@ -5,4 +5,10 @@ module.exports = {
       required: true,
     },
   ],
+  updateSchool: [
+    {
+      model: "name",
+      required: false,
+    },
+  ],
 };

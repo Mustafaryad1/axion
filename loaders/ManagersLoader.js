@@ -10,8 +10,8 @@ const utils                 = require('../libs/utils');
 
 const systemArch            = require('../static_arch/main.system');
 const TokenManager          = require('../managers/token/Token.manager');
-const SchoolManager         = require('../managers/school/School.manager');
 const ClassroomManager      = require('../managers/classroom/Classroom.manager');
+const SchoolManager         = require('../managers/school/School.manager');
 const StudentManager        = require('../managers/student/Student.manager');
 const UserManger            = require('../managers/user/User.manager');
 const SharkFin              = require('../managers/shark_fin/SharkFin.manager');

@@ -91,7 +91,7 @@ module.exports = class ApiHandler {
                 }
             }
         });
-
+        console.log(this.methodMatrix)
         /** expose apis through cortex */
         this.cortex.sub('*', (d, meta, cb) => {
             let [moduleName, fnName] = meta.event.split('.');

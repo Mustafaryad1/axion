@@ -1,1 +1,1 @@
-swagger: 
+swagger: http://142.93.47.38:5111/api-docs

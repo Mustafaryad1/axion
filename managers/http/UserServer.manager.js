@@ -18,6 +18,8 @@ module.exports = class UserServer {
   run() {
     /** load routes */
     const schoolRoutes = require("./routes/school.route");
+    const classroomRoutes = require("./routes/classroom.route");
+    const studentRoutes = require("./routes/student.route");
 
     app.use(cors({ origin: "*" }));
     app.use(express.json());
@@ -32,6 +34,8 @@ module.exports = class UserServer {
 
     /** load routes */
     app.use("/api/schools", schoolRoutes);
+    app.use("/api/classrooms", classroomRoutes);
+    app.use("/api/students", studentRoutes);
 
     /** a single middleware to handle all */
     app.all("/api/:moduleName/:fnName", this.userApi.mw);

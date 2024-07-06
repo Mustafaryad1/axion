@@ -37,7 +37,7 @@ module.exports = class UserManger {
 
     // Response
     return {
-      user: createdUser,
+      user: { username, role: createdUser.role, _id: createdUser._id },
       longToken,
     };
   }
@@ -65,7 +65,7 @@ module.exports = class UserManger {
 
     // Response
     return {
-      user: foundUser,
+      user: { username, role: foundUser.role, _id: foundUser._id },
       longToken,
     };
   }

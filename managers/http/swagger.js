@@ -2,7 +2,7 @@ const swaggerJSDoc = require("swagger-jsdoc");
 const schoolManagerPaths = require("./swagger/school");
 const classroomManagerPaths = require("./swagger/classroom");
 const studentManagerPaths = require("./swagger/student");
-const { serve } = require("swagger-ui-express");
+const userManagerPaths = require("./swagger/user");
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -12,6 +12,10 @@ const swaggerDefinition = {
     description: "My API Description",
   },
   tags: [
+    {
+      name: "User",
+      description: "User API",
+    },
     {
       name: "School",
       description: "School API",
@@ -63,6 +67,7 @@ const swaggerDefinition = {
   externalDocs: { url: "", description: "" },
   warnings: [],
   paths: {
+    ...userManagerPaths,
     ...schoolManagerPaths,
     ...classroomManagerPaths,
     ...studentManagerPaths,

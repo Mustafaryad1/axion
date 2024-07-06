@@ -29,14 +29,31 @@ module.exports = class SchoolManager {
 
   async v1_getSchools({}) {
     const School = this.mongomodels[this.usersCollection];
-    const schools = await School.find();
+    const schools = await School.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "admins",
+          foreignField: "_id",
+          as: "admins",
+          pipeline: [
+            {
+              $project: {
+                _id: 1,
+                username: 1,
+              },
+            },
+          ],
+        },
+      },
+    ]);
     return schools;
   }
 
   async v1_getSchoolById({ __query }) {
     const { id } = __query;
     const School = this.mongomodels[this.usersCollection];
-    const school = await School.findById(id);
+    const school = await School.findById(id).populate("admins", "_id username");
     return school;
   }
 

@@ -12,28 +12,28 @@ module.exports = class ClassroomManager {
     ]; // exposed functions
   }
 
-  async v1_createClassroom({ __body }) {
-    console.log(__body);
+  async v1_createClassroom({ __body, __longToken }) {
+    const body = __body;
     const Classroom = this.mongomodels[this.usersCollection];
     const classroom = new Classroom(body);
     await classroom.save();
     return classroom;
   }
 
-  async v1_getClassrooms({}) {
+  async v1_getClassrooms({ __longToken }) {
     const Classroom = this.mongomodels[this.usersCollection];
     const classrooms = await Classroom.find();
     return classrooms;
   }
 
-  async v1_getClassroomById({ __query }) {
+  async v1_getClassroomById({ __query, __longToken }) {
     const { id } = __query;
     const Classroom = this.mongomodels[this.usersCollection];
     const classroom = await Classroom.findById(id);
     return classroom;
   }
 
-  async v1_updateClassroom({ __body, __query }) {
+  async v1_updateClassroom({ __body, __query, __longToken }) {
     const body = __body;
     const { id } = __query;
     const Classroom = this.mongomodels[this.usersCollection];
@@ -43,7 +43,7 @@ module.exports = class ClassroomManager {
     return classroom;
   }
 
-  async v1_deleteClassroom({ __query }) {
+  async v1_deleteClassroom({ __query, __longToken }) {
     const { id } = __query;
     const Classroom = this.mongomodels[this.usersCollection];
     const classroom = await Classroom.findByIdAndDelete(id);

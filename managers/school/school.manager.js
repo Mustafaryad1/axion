@@ -15,7 +15,7 @@ module.exports = class SchoolManager {
     ]; // exposed functions
   }
 
-  async v1_createSchool({ name, admins }) {
+  async v1_createSchool({ __longToken, __isSuperAdmin, name, admins }) {
     const school = { name, admins };
 
     const result = await this.validators.school.createSchool(school);
@@ -27,7 +27,7 @@ module.exports = class SchoolManager {
     return createdSchool;
   }
 
-  async v1_getSchools({ __longToken, __isSuperAdmin }) {
+  async v1_getSchools({ __longToken }) {
     const School = this.mongomodels[this.usersCollection];
     const schools = await School.aggregate([
       {
@@ -50,14 +50,14 @@ module.exports = class SchoolManager {
     return schools;
   }
 
-  async v1_getSchoolById({ __query }) {
+  async v1_getSchoolById({ __query, __longToken }) {
     const { id } = __query;
     const School = this.mongomodels[this.usersCollection];
     const school = await School.findById(id).populate("admins", "_id username");
     return school;
   }
 
-  async v1_updateSchool({ name, __query }) {
+  async v1_updateSchool({ name, __query, __longToken, __isSuperAdmin }) {
     const result = await this.validators.school.updateSchool({ name });
     if (result) return result;
 
@@ -67,7 +67,7 @@ module.exports = class SchoolManager {
     return school;
   }
 
-  async v1_deleteSchool({ __query }) {
+  async v1_deleteSchool({ __query, __longToken, __isSuperAdmin }) {
     const { id } = __query;
     const School = this.mongomodels[this.usersCollection];
     const school = await School.findByIdAndDelete(id);

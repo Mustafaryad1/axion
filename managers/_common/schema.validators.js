@@ -1,4 +1,3 @@
-const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = {
   username: (data) => {

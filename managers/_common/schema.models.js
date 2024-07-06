@@ -26,6 +26,11 @@ module.exports = {
     },
     length: { min: 1, max: 10 },
   },
+  role: {
+    path: "role",
+    type: "string",
+    oneOf: ["super-admin", "admin"],
+  },
   password: {
     path: "password",
     type: "string",

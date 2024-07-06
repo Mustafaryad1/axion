@@ -17,8 +17,8 @@ module.exports = class UserManger {
     this.httpExposed = ["v1_createUser"]; // exposed functions
   }
 
-  async v1_createUser({ username, password }) {
-    const user = { username, password };
+  async v1_createUser({ username, password, role }) {
+    const user = { username, password, role };
 
     // Data validation
     let result = await this.validators.user.createUser(user);

@@ -1,3 +1,5 @@
+const ObjectId = require("mongoose").Types.ObjectId;
+
 module.exports = class SchoolManager {
   constructor({ config, mongomodels, validators }) {
     this.config = config;
@@ -13,8 +15,8 @@ module.exports = class SchoolManager {
     ]; // exposed functions
   }
 
-  async v1_createSchool({ name }) {
-    const school = { name };
+  async v1_createSchool({ name, admins }) {
+    const school = { name, admins };
 
     const result = await this.validators.school.createSchool(school);
     if (result) return result;
@@ -41,7 +43,7 @@ module.exports = class SchoolManager {
   async v1_updateSchool({ name, __query }) {
     const result = await this.validators.school.updateSchool({ name });
     if (result) return result;
-    
+
     const { id } = __query;
     const School = this.mongomodels[this.usersCollection];
     const school = await School.findByIdAndUpdate(id, { name }, { new: true });

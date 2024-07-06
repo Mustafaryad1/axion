@@ -163,6 +163,13 @@ const createSchool = {
               type: "string",
               description: "school name",
             },
+            admins: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              description: "list of admin IDs",
+            },
           },
         },
       },

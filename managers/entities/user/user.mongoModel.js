@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  schools: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "School",
+    },
+  ],
   role: {
     type: String,
     enum: ["super-admin", "admin"],

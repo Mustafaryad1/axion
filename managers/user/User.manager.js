@@ -14,7 +14,7 @@ module.exports = class UserManger {
     this.mongomodels = mongomodels;
     this.tokenManager = managers.token;
     this.usersCollection = "user";
-    this.httpExposed = ["v1_createUser"]; // exposed functions
+    this.httpExposed = ["v1_createUser", "v1_login"]; // exposed functions
   }
 
   async v1_createUser({ username, password, role }) {
@@ -38,6 +38,34 @@ module.exports = class UserManger {
     // Response
     return {
       user: createdUser,
+      longToken,
+    };
+  }
+
+  async v1_login({ username, password }) {
+    const user = { username, password };
+
+    // Data validation
+    let result = await this.validators.user.login(user);
+    if (result) return result;
+
+    // Login Logic
+    const User = this.mongomodels[this.usersCollection];
+    const foundUser = await User.findOne({ username });
+    if (!foundUser) return { errors: ["User not found"] };
+
+    const isPasswordValid = foundUser.password == password;
+    if (!isPasswordValid) return { errors: ["Invalid password"] };
+
+    let longToken = this.tokenManager.genLongToken({
+      userId: foundUser._id,
+      userKey: foundUser.key,
+      role: foundUser.role,
+    });
+
+    // Response
+    return {
+      user: foundUser,
       longToken,
     };
   }

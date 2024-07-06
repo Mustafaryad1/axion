@@ -13,4 +13,14 @@ module.exports = {
       required: true,
     },
   ],
+  login: [
+    {
+      model: "username",
+      required: true,
+    },
+    {
+      model: "password",
+      required: true,
+    },
+  ],
 };

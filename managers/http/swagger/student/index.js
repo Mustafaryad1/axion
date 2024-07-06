@@ -141,6 +141,10 @@ const updateStudent = {
         schema: {
           type: "object",
           properties: {
+            name: {
+              type: "string",
+              description: "student name",
+            },
             classroom: {
               type: "string",
               description: "classroom ID",

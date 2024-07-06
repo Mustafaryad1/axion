@@ -10,6 +10,7 @@ const utils                 = require('../libs/utils');
 
 const systemArch            = require('../static_arch/main.system');
 const TokenManager          = require('../managers/token/Token.manager');
+const SchoolManager        = require('../managers/school/School.manager');
 const SharkFin              = require('../managers/shark_fin/SharkFin.manager');
 const TimeMachine           = require('../managers/time_machine/TimeMachine.manager');
 const MongoLoader           = require('./MongoLoader');
@@ -53,6 +54,7 @@ module.exports = class ManagersLoader {
         this.validators           = validatorsLoader.load();
         this.resourceNodes        = resourceMeshLoader.load();
         this.mongomodels          = mongoLoader.load();
+        console.log(this.mongomodels)
 
     }
 
@@ -67,6 +69,7 @@ module.exports = class ManagersLoader {
         this.managers.shark               = new SharkFin({ ...this.injectable, layers, actions });
         this.managers.timeMachine         = new TimeMachine(this.injectable);
         this.managers.token               = new TokenManager(this.injectable);
+        this.managers.school              = new SchoolManager(this.injectable);
         /*************************************************************************************************/
         this.managers.mwsExec             = new VirtualStack({ ...{ preStack: [/* '__token', */'__device',] }, ...this.injectable });
         this.managers.userApi             = new ApiHandler({...this.injectable,...{prop:'httpExposed'}});

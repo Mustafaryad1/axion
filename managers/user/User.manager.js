@@ -1,4 +1,4 @@
-module.exports = class User { 
+module.exports = class UserManger { 
 
     constructor({utils, cache, config, cortex, managers, validators, mongomodels }={}){
         this.config              = config;
@@ -18,7 +18,10 @@ module.exports = class User {
         if(result) return result;
         
         // Creation Logic
-        let createdUser     = {username, email, password}
+        const User = this.mongomodels[this.usersCollection];
+        const createdUser = new User(user);
+        await createdUser.save();
+        
         let longToken       = this.tokenManager.genLongToken({userId: createdUser._id, userKey: createdUser.key });
         
         // Response

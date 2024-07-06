@@ -28,7 +28,38 @@ const createStudent = async (req, res) => {
 // Get all students
 const getAllStudents = async (req, res) => {
   try {
-    const students = await Student.find();
+    const students = await Student.aggregate([
+      {
+        $lookup: {
+          from: "classrooms",
+          localField: "classroom",
+          foreignField: "_id",
+          as: "classroom",
+          pipeline: [
+            {
+              $lookup: {
+                from: "schools",
+                localField: "school",
+                foreignField: "_id",
+                as: "school",
+                pipeline: [
+                  {
+                    $project: {
+                      name: 1,
+
+                      _id: 1,
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              $unwind: "$school",
+            },
+          ],
+        },
+      },
+    ]);
     return responseManager.dispatch(res, {
       ok: true,
       data: students,
@@ -49,7 +80,10 @@ const getAllStudents = async (req, res) => {
 const getStudentById = async (req, res) => {
   try {
     const { id } = req.params;
-    const student = await Student.findById(id);
+    const student = await Student.findById(id).populate({
+      path: "classroom",
+      populate: { path: "school", select: "_id name" },
+    });
     return responseManager.dispatch(res, {
       ok: true,
       data: student,

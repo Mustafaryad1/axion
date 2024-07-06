@@ -26,10 +26,6 @@ const getStudents = {
                       type: "string",
                       description: "student name",
                     },
-                    age: {
-                      type: "number",
-                      description: "student age",
-                    },
                     classroom: {
                       type: "string",
                       description: "classroom ID",
@@ -74,10 +70,6 @@ const createStudent = {
               type: "string",
               description: "student name",
             },
-            age: {
-              type: "number",
-              description: "student age",
-            },
             classroom: {
               type: "string",
               description: "classroom ID",
@@ -106,17 +98,13 @@ const createStudent = {
                     type: "string",
                     description: "student ID",
                   },
-                  name: {
-                    type: "string",
-                    description: "student name",
-                  },
-                  age: {
-                    type: "number",
-                    description: "student age",
-                  },
                   classroom: {
                     type: "string",
                     description: "classroom ID",
+                  },
+                  name: {
+                    type: "string",
+                    description: "student name",
                   },
                   __v: {
                     type: "integer",
@@ -153,14 +141,6 @@ const updateStudent = {
         schema: {
           type: "object",
           properties: {
-            name: {
-              type: "string",
-              description: "student name",
-            },
-            age: {
-              type: "number",
-              description: "student age",
-            },
             classroom: {
               type: "string",
               description: "classroom ID",
@@ -199,14 +179,6 @@ const updateStudent = {
                   _id: {
                     type: "string",
                     description: "student ID",
-                  },
-                  name: {
-                    type: "string",
-                    description: "student name",
-                  },
-                  age: {
-                    type: "number",
-                    description: "student age",
                   },
                   classroom: {
                     type: "string",
@@ -270,14 +242,6 @@ const deleteStudent = {
                   _id: {
                     type: "string",
                     description: "student ID",
-                  },
-                  name: {
-                    type: "string",
-                    description: "student name",
-                  },
-                  age: {
-                    type: "number",
-                    description: "student age",
                   },
                   classroom: {
                     type: "string",

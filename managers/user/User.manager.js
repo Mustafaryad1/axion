@@ -32,6 +32,7 @@ module.exports = class UserManger {
     let longToken = this.tokenManager.genLongToken({
       userId: createdUser._id,
       userKey: createdUser.key,
+      role: createdUser.role,
     });
 
     // Response

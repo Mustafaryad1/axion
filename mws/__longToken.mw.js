@@ -1,5 +1,6 @@
 module.exports = ({ meta, config, managers }) =>{
     return ({req, res, next})=>{
+        console.log('called')
         if(!req.headers.token){
             console.log('token required but not found')
             return managers.responseDispatcher.dispatch(res, {ok: false, code:401, errors: 'unauthorized'});
@@ -15,6 +16,7 @@ module.exports = ({ meta, config, managers }) =>{
             console.log('failed to decode-2')
             return managers.responseDispatcher.dispatch(res, {ok: false, code:401, errors: 'unauthorized'});
         }
+        req.user= decoded;
         next(decoded);
     }
 }

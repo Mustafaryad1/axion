@@ -27,7 +27,7 @@ module.exports = class SchoolManager {
     return createdSchool;
   }
 
-  async v1_getSchools({}) {
+  async v1_getSchools({ __longToken, __isSuperAdmin }) {
     const School = this.mongomodels[this.usersCollection];
     const schools = await School.aggregate([
       {

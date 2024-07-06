@@ -1,4 +1,5 @@
 const ObjectId = require("mongoose").Types.ObjectId;
+const mongoose = require("mongoose");
 
 module.exports = class SchoolManager {
   constructor({ config, mongomodels, validators }) {
@@ -57,20 +58,44 @@ module.exports = class SchoolManager {
     return school;
   }
 
-  async v1_updateSchool({ name, __query, __longToken, __isSuperAdmin }) {
+  async v1_updateSchool({ name, __query, __longToken, __currentUser }) {
+    const user = __currentUser;
+
     const result = await this.validators.school.updateSchool({ name });
     if (result) return result;
 
     const { id } = __query;
     const School = this.mongomodels[this.usersCollection];
-    const school = await School.findByIdAndUpdate(id, { name }, { new: true });
+    const school = await this.checkSchoolAdmin({
+      schoolId: id,
+      userId: user.userId,
+    });
+    if (!school) return { ok: false, code: 401, errors: "Unauthorized" };
+    await School.findByIdAndUpdate(id, { name }, { new: true });
     return school;
   }
 
-  async v1_deleteSchool({ __query, __longToken, __isSuperAdmin }) {
+  async v1_deleteSchool({ __query, __longToken, __currentUser }) {
+    const user = __currentUser;
+
     const { id } = __query;
     const School = this.mongomodels[this.usersCollection];
-    const school = await School.findByIdAndDelete(id);
+    const school = await this.checkSchoolAdmin({
+      schoolId: id,
+      userId: user.userId,
+    });
+    if (!school) return { ok: false, code: 401, errors: "Unauthorized" };
+    await School.findByIdAndDelete(id);
+
+    return school;
+  }
+
+  async checkSchoolAdmin({ schoolId, userId }) {
+    const School = this.mongomodels[this.usersCollection];
+    const school = await School.findOne({
+      _id: new mongoose.Types.ObjectId(schoolId),
+      admins: new mongoose.Types.ObjectId(userId),
+    });
     return school;
   }
 };

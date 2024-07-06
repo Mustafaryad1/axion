@@ -1,7 +1,8 @@
 module.exports = class SchoolManager {
-  constructor({ config, mongomodels }) {
+  constructor({ config, mongomodels, validators }) {
     this.config = config;
     this.mongomodels = mongomodels;
+    this.validators = validators;
     this.usersCollection = "school";
     this.httpExposed = [
       "v1_createSchool",
@@ -12,13 +13,16 @@ module.exports = class SchoolManager {
     ]; // exposed functions
   }
 
-  async v1_createSchool({ __body }) {
-    console.log(__body);
-    const { name } = __body;
+  async v1_createSchool({ name }) {
+    const school = { name };
+
+    const result = await this.validators.school.createSchool(school);
+    if (result) return result;
+
     const School = this.mongomodels[this.usersCollection];
-    const school = new School({ name });
-    await school.save();
-    return school;
+    const createdSchool = new School(school);
+    await createdSchool.save();
+    return createdSchool;
   }
 
   async v1_getSchools({}) {

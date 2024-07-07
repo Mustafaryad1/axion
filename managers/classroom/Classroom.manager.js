@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongoose").Types;
+
 module.exports = class ClassroomManager {
   constructor({ config, mongomodels, validators, managers }) {
     this.config = config;
@@ -87,10 +89,12 @@ module.exports = class ClassroomManager {
   }
 
   async checkClassroomAdmin({ classroomId, userId }) {
+    if (!ObjectId.isValid(classroomId) || !ObjectId.isValid(userId))
+      return false;
     const Classroom = this.mongomodels[this.usersCollection];
     const classroom = await Classroom.findById(classroomId).populate("school");
     if (!classroom) return false;
-    if (classroom.school.admins.includes(userId)) return classroom;
+    if (classroom.school?.admins.includes(userId)) return classroom;
     return false;
   }
 };

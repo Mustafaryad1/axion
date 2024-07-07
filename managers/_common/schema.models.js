@@ -17,6 +17,10 @@ module.exports = {
     type: "string",
     length: { min: 3, max: 100 },
   },
+  classroom: {
+    path: "classroom",
+    type: "string",
+  },
   school: {
     path: "school",
     type: "string",

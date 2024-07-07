@@ -91,6 +91,7 @@ module.exports = class SchoolManager {
   }
 
   async checkSchoolAdmin({ schoolId, userId }) {
+    if (!ObjectId.isValid(schoolId) || !ObjectId.isValid(userId)) return null;
     const School = this.mongomodels[this.usersCollection];
     const school = await School.findOne({
       _id: new mongoose.Types.ObjectId(schoolId),
